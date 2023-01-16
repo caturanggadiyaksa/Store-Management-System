@@ -6,6 +6,7 @@ package storemanagement.system;
 
 import com.mysql.jdbc.Connection;
 import java.sql.DriverManager;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,27 +17,30 @@ public class StoreManagementSystem {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) {  
         // TODO code application logic here
-         StoreManagementSystem koneksi = new StoreManagementSystem();
-        koneksi.KoneksiDB();
+         StoreManagementSystem conn = new StoreManagementSystem();
+        conn.koneksi();
     }
     
-    Connection koneksi = null;
-    String status = "";
-    
-    
-    public void KoneksiDB() {
+    String status = "Tidak Terhubung";
+    java.sql.Connection con = null;
+
+    public void koneksi() {
         try {
-            String url = "jdbc:mysql://localhost/store-manajemen";
+            String connectionURL = "jdbc:mysql://localhost/store-manajemen";
             String username = "root";
             String password = "";
             Class.forName("com.mysql.jdbc.Driver");
-            koneksi = (Connection)DriverManager.getConnection(url, username, password);
-            status = "Berhasil mengkoneksikan java ke DB MYSQL";
-        } catch (Exception error) {
-            status = "Gagal mengkoneksikan java ke DB MYSQL";
-            System.exit(0);
+            con = DriverManager.getConnection(connectionURL, username, password);
+
+            status = "Terhubung";
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Gagal Terhubung");
+            e.printStackTrace();
+
         }
     }
+    
+    
 }
